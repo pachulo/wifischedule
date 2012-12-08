@@ -1,0 +1,11 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+
+start() {
+	[ -x /usr/sbin/wifi_schedule ] && [ ! -f /var/run/wifi_schedule.pid ] && /usr/sbin/wifi_schedule &
+}
+
+stop () {
+	[ -f /var/run/wifi_schedule.pid ] && kill $(cat /var/run/wifi_schedule.pid) && rm /var/run/wifi_schedule.pid
+}

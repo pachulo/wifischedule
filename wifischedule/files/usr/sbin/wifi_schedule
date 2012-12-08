@@ -1,0 +1,25 @@
+#!/bin/sh
+
+echo "$$" > /var/run/wifi_schedule.pid
+
+while [ 1 ] ; do
+	day_hour=$(date +"%u_%k" | tr -d ' ')
+	enabledoncurrenthour="x$(uci -q get wifi_schedule.Days.`echo $day_hour`)"
+
+	if [ $enabledoncurrenthour == "x1" ]
+	then
+		if [ "x$(uci -q -P /var/state/ get wireless.@wifi-iface[0].up)" != "x1" ]
+		then
+        	        logger "wifi is enabled $day_hour and wifi is off, turn on"
+                	wifi up
+		fi
+	else
+		if [ "x$(uci -q -P /var/state/ get wireless.@wifi-iface[0].up)" == "x1" ]
+	        then
+        	        logger "wifi is disabled $day_hour and wifi is on, turn off"
+	                wifi down
+        	fi
+	fi
+
+	sleep 30
+done
