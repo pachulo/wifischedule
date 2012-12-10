@@ -25,7 +25,7 @@ define Package/luci-app-wifischedule
 endef
 
 define Package/luci-app-wifischedule/description
-A wifi scheduler
+Wifi Schedule is a very useful app which will allow you to manage and schedule when your device Wi-Fi will turn on and off.
 endef
 
 define Build/Compile

@@ -23,7 +23,7 @@ define Package/wifischedule
 endef
 
 define Package/wifischedule/description
-A wifi scheduler
+Wifi Schedule is a very useful app which will allow you to manage and schedule when your device Wi-Fi will turn on and off.
 endef
 
 define Package/wifischedule/conffiles
@@ -42,6 +42,14 @@ if [ -z "$${IPKG_INSTROOT}" ]
 then
 /etc/init.d/wifi_schedule enable
 /etc/init.d/wifi_schedule start
+
+grep -q 'wifi_schedule' $${IPKG_INSTROOT}/etc/config/ucitrack 2>/dev/null
+[ $$? -ne 0 ] && {
+       echo "" >>$${IPKG_INSTROOT}/etc/config/ucitrack
+       echo "config wifi_schedule" >>$${IPKG_INSTROOT}/etc/config/ucitrack
+       echo "       option init wifi_schedule" >>$${IPKG_INSTROOT}/etc/config/ucitrack
+}
+
 fi
 exit 0
 endef
