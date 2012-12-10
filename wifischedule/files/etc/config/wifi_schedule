@@ -1,2 +1,6 @@
 
-config wifischedule 'Days'
+config days
+
+config options
+	option interval '60'
+
