@@ -3,7 +3,16 @@
 START=99
 
 start() {
-	[ -x /usr/sbin/wifi_schedule ] && [ ! -f /var/run/wifi_schedule.pid ] && /usr/sbin/wifi_schedule &
+	if [ -x /usr/sbin/wifi_schedule ]
+	then
+		if [ -f /var/run/wifi_schedule.pid ] && [ "$(cat /var/run/wifi_schedule.pid)" -gt 0 ]
+		then
+			echo "wifi_schedule is running"
+		else
+                        echo "Starting wifi_schedule"
+                        /usr/sbin/wifi_schedule &
+		fi
+	fi
 }
 
 stop () {
