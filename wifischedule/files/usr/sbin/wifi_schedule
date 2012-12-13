@@ -14,15 +14,15 @@ while [ 1 ] ; do
 	then
 		if [ "x$(uci -q -P /var/state/ get wireless.@wifi-iface[0].up)" != "x1" ]
 		then
-        	        logger "wifi_schedule: wifi is enabled $day_hour and wifi is off, turn on"
-                	wifi up
+			logger "wifi_schedule: wifi is enabled $day_hour and wifi is off, turn on"
+			wifi up
 		fi
 	else
 		if [ "x$(uci -q -P /var/state/ get wireless.@wifi-iface[0].up)" == "x1" ]
-	        then
-        	        logger "wifi_schedule: wifi is disabled $day_hour and wifi is on, turn off"
-	                wifi down
-        	fi
+		then
+			logger "wifi_schedule: wifi is disabled $day_hour and wifi is on, turn off"
+			wifi down
+		fi
 	fi
 
 	timetosleep=$(uci -q -c /var/wifi_schedule get wifi_schedule.@options[0].interval)

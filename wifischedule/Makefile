@@ -14,12 +14,12 @@ PKG_RELEASE:=2
 include $(INCLUDE_DIR)/package.mk
 
 define Package/wifischedule
-  SECTION:=net
-  CATEGORY:=Network
-  DEPENDS:=
-  TITLE:=A wifi scheduler
-  URL:=http://openwrt.razvi.ro/wifischedule/wifischedule_$(PKG_VERSION)-$(PKG_RELEASE).ipk
-  MAINTAINER:=Razvan Stanga <wifischedule@razvi.ro>
+	SECTION:=net
+	CATEGORY:=Network
+	DEPENDS:=
+	TITLE:=A wifi scheduler
+	URL:=http://openwrt.razvi.ro/wifischedule/wifischedule_$(PKG_VERSION)-$(PKG_RELEASE).ipk
+	MAINTAINER:=Razvan Stanga <wifischedule@razvi.ro>
 endef
 
 define Package/wifischedule/description
@@ -34,10 +34,11 @@ define Build/Compile
 endef
 
 define Package/wifischedule/install
-	$(CP) ./files/* $(1)
+$(CP) ./files/* $(1)
 endef
 
 define Package/wifischedule/postinst
+#!/bin/sh
 if [ -z "$${IPKG_INSTROOT}" ]
 then
 /etc/init.d/wifi_schedule enable
@@ -52,6 +53,19 @@ grep -q 'wifi_schedule' $${IPKG_INSTROOT}/etc/config/ucitrack 2>/dev/null
 
 fi
 exit 0
+endef
+
+define Package/wifischedule/prerm
+#!/bin/sh
+/etc/init.d/wifi_schedule disable
+/etc/init.d/wifi_schedule stop
+endef
+
+define Package/wifischedule/postrm
+#!/bin/sh
+uci delete ucitrack.@wifi_schedule[0].init
+uci delete ucitrack.@wifi_schedule[0]
+uci commit
 endef
 
 $(eval $(call BuildPackage,wifischedule))

@@ -14,14 +14,14 @@ PKG_RELEASE:=2
 include $(INCLUDE_DIR)/package.mk
 
 define Package/luci-app-wifischedule
-  SECTION:=luci
-  CATEGORY:=LuCI
-  DEPENDS:=+wifischedule
-  TITLE:=LuCI - Lua Configuration Interface
-  URL:=http://openwrt.razvi.ro/wifischedule/luci-app-wifischedule_$(PKG_VERSION)-$(PKG_RELEASE).ipk
-  MAINTAINER:=Razvan Stanga <wifischedule@razvi.ro>
-  SUBMENU:=3. Applications
-  TITLE:=LuCI Support for wifischedule
+	SECTION:=luci
+	CATEGORY:=LuCI
+	DEPENDS:=+wifischedule
+	TITLE:=LuCI - Lua Configuration Interface
+	URL:=http://openwrt.razvi.ro/wifischedule/luci-app-wifischedule_$(PKG_VERSION)-$(PKG_RELEASE).ipk
+	MAINTAINER:=Razvan Stanga <wifischedule@razvi.ro>
+	SUBMENU:=3. Applications
+	TITLE:=LuCI Support for wifischedule
 endef
 
 define Package/luci-app-wifischedule/description
@@ -32,7 +32,7 @@ define Build/Compile
 endef
 
 define Package/luci-app-wifischedule/install
-	$(CP) ./files/* $(1)
+$(CP) ./files/* $(1)
 endef
 
 $(eval $(call BuildPackage,luci-app-wifischedule))
