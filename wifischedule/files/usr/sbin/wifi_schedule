@@ -2,7 +2,6 @@
 
 echo "$$" > /var/run/wifi_schedule.pid
 
-logger "wifi_schedule is starting"
 mkdir -p /var/wifi_schedule
 cp /etc/config/wifi_schedule /var/wifi_schedule
 

@@ -7,19 +7,21 @@ start() {
 	then
 		if [ -f /var/run/wifi_schedule.pid ] && [ "$(cat /var/run/wifi_schedule.pid)" -gt 0 ]
 		then
-			echo "wifi_schedule is running"
+			logger "wifi_schedule is running with pid $(cat /var/run/wifi_schedule.pid)"
 		else
-			echo "Starting wifi_schedule"
+			logger "wifi_schedule is starting"
 			/usr/sbin/wifi_schedule &
 		fi
 	fi
 }
 
 stop () {
-	[ -f /var/run/wifi_schedule.pid ] && kill $(cat /var/run/wifi_schedule.pid) && rm /var/run/wifi_schedule.pid
+	[ -f /var/run/wifi_schedule.pid ] && kill -USR1 $(cat /var/run/wifi_schedule.pid) && rm /var/run/wifi_schedule.pid
 	if [ "x$(uci -q -P /var/state/ get wireless.@wifi-iface[0].up)" != "x1" ]
 	then
-		logger "wifi_schedule: turning off and wifi is off, turn on"
+		logger "wifi_schedule is turning off and wifi is off, so turn it on"
 		wifi up
+	else
+		logger "wifi_schedule is turning off"
 	fi
 }
