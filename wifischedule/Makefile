@@ -20,6 +20,7 @@ define Package/wifischedule
 	TITLE:=A wifi scheduler
 	URL:=http://openwrt.razvi.ro/wifischedule/wifischedule_$(PKG_VERSION)-$(PKG_RELEASE).ipk
 	MAINTAINER:=Razvan Stanga <wifischedule@razvi.ro>
+	PKGARCH:=all
 endef
 
 define Package/wifischedule/description

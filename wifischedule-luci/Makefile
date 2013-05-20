@@ -20,6 +20,7 @@ define Package/luci-app-wifischedule
 	TITLE:=LuCI - Lua Configuration Interface
 	URL:=http://openwrt.razvi.ro/wifischedule/luci-app-wifischedule_$(PKG_VERSION)-$(PKG_RELEASE).ipk
 	MAINTAINER:=Razvan Stanga <wifischedule@razvi.ro>
+	PKGARCH:=all
 	SUBMENU:=3. Applications
 	TITLE:=LuCI Support for wifischedule
 endef
