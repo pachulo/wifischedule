@@ -11,13 +11,13 @@ while [ 1 ] ; do
 
 	if [ $enabledoncurrenthour == "x1" ]
 	then
-		if [ "x$(uci -q -P /var/state/ get wireless.@wifi-iface[0].up)" != "x1" ]
+		if [ ! -L /sys/devices/virtual/net/br-lan/brif/wlan0 ] && [ ! -L /sys/devices/virtual/net/br-lan/brif/wlan1 ] && [ ! -L /sys/devices/virtual/net/br-lan/brif/wl0 ] && [ ! -L /sys/devices/virtual/net/br-lan/brif/wl1 ] && [ ! -L /sys/devices/virtual/net/br-lan/brif/ath0 ] && [ ! -L /sys/devices/virtual/net/br-lan/brif/ath1 ]
 		then
 			logger "wifi_schedule: wifi is enabled $day_hour and wifi is off, turn on"
 			wifi up
 		fi
 	else
-		if [ "x$(uci -q -P /var/state/ get wireless.@wifi-iface[0].up)" == "x1" ]
+		if [ -L /sys/devices/virtual/net/br-lan/brif/wlan0 ] || [ -L /sys/devices/virtual/net/br-lan/brif/wlan1 ] || [ -L /sys/devices/virtual/net/br-lan/brif/wl0 ] || [ -L /sys/devices/virtual/net/br-lan/brif/wl1 ] || [ -L /sys/devices/virtual/net/br-lan/brif/ath0 ] || [ -L /sys/devices/virtual/net/br-lan/brif/ath1 ]
 		then
 			logger "wifi_schedule: wifi is disabled $day_hour and wifi is on, turn off"
 			wifi down
