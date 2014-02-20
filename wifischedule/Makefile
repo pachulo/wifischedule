@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wifischedule
 PKG_VERSION:=0.1
-PKG_RELEASE:=4
+PKG_RELEASE:=5
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -42,16 +42,11 @@ define Package/wifischedule/postinst
 #!/bin/sh
 if [ -z "$${IPKG_INSTROOT}" ]
 then
-/etc/init.d/wifi_schedule enable
-/etc/init.d/wifi_schedule start
-
-grep -q 'wifi_schedule' $${IPKG_INSTROOT}/etc/config/ucitrack 2>/dev/null
-[ $$? -ne 0 ] && {
-       echo "" >>$${IPKG_INSTROOT}/etc/config/ucitrack
-       echo "config wifi_schedule" >>$${IPKG_INSTROOT}/etc/config/ucitrack
-       echo "       option init wifi_schedule" >>$${IPKG_INSTROOT}/etc/config/ucitrack
-}
-
+	/etc/init.d/wifi_schedule enable
+	/etc/init.d/wifi_schedule start
+	uci add ucitrack wifi_schedule
+	uci set ucitrack.@wifi_schedule[0].init=wifi_schedule
+	uci commit
 fi
 exit 0
 endef
